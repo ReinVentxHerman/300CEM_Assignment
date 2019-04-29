@@ -1,8 +1,8 @@
 package com.example.storyline;
 
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -83,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         Polyline polyline=mMap.addPolyline(o);
+
 
     }
 

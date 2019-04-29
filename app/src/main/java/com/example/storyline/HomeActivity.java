@@ -30,7 +30,6 @@ ArrayList<Story> storys;
 
     ListStoryTask listStoryTask=null;
 
-    static final int MY_PERMISSION_ACCESS_FINE_LOCATION=99;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +54,6 @@ ArrayList<Story> storys;
                 startActivity(new Intent(view.getContext(),CreateStoryActivity.class));
             }
         });
-
-
 
     }
 
@@ -93,7 +90,6 @@ ArrayList<Story> storys;
                         storys.add(story);
                         adapter.notifyItemChanged(i);
                     }
-                    //adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class StoryNodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class
+
+StoryNodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity activity;
     ArrayList<StoryNode> nodes;

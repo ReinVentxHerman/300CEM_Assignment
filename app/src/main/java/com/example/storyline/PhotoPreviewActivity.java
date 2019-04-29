@@ -1,7 +1,6 @@
 package com.example.storyline;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,10 +9,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -74,24 +73,18 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         buttonGPS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("\n\nbuttonGPS onClick\n\n");
+
                 if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    System.out.println("\n\nno permission1\n\n");
 
                 }else {
-                    System.out.println("\n\nyes permission1\n\n");
-
                     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     locationListener = new LocationListener() {
                         public void onLocationChanged(Location l) {
                             // Called when a new location is found by the network location provider.
                             location = l;
-                            System.out.println("\n\nLocation\n\nLocation");
                         }
 
                         public void onStatusChanged(String provider, int status, Bundle extras) {
-
-
                         }
 
                         public void onProviderEnabled(String provider) {

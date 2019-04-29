@@ -1,8 +1,8 @@
 package com.example.storyline;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +22,17 @@ public class RegisterActivity extends AppCompatActivity {
     Button SignUp;
 
     RegisterTask registerTask;
+
+    public static boolean isPasswordConfirmOk(String p1, String p2) {
+        if (!isEmptyString(p1))
+            return p1.equals(p2);
+        return false;
+    }
+
+    public static boolean isEmptyString(String s) {
+        return s.equals("");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +57,9 @@ public class RegisterActivity extends AppCompatActivity {
                 setErrorMessage("");
                 setProcessMessage(getString(R.string.process));
 
-                if (!SignUpUsername.getText().toString().equals("")){
-                    if (!SignUpPassword.getText().toString().equals("")){
-                        if (SignUpPassword.getText().toString().equals(SignUpPasswordConfirm.getText().toString())){
-
+                if (!isEmptyString(SignUpUsername.getText().toString())) {
+                    if (!isEmptyString(SignUpPassword.getText().toString())) {
+                        if (isPasswordConfirmOk(SignUpPassword.getText().toString(), SignUpPasswordConfirm.getText().toString())) {
                             registerTask=new RegisterTask(SignUpUsername.getText().toString(),SignUpPassword.getText().toString());
                             registerTask.execute();
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhotoPreviewActivity"
+    android:background="@color/colorDarkGary"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/uploadErrorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/toUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart" />
+
+        <EditText
+            android:id="@+id/toUploadDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write a description..."
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorPrimaryLight"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+
+            >
+
+            <Button
+                android:id="@+id/sentPostButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="OK"
+                android:visibility="invisible"
+                tools:clickable="false"
+                android:background="@color/colorPrimary"
+                />
+
+            <Button
+                android:id="@+id/takePhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="Take a photo"
+                android:background="@color/colorPrimaryDark"
+                />
+            <Button
+                android:id="@+id/permissionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="permission"
+                android:background="@color/colorPrimary"
+                />
+            <Button
+            android:id="@+id/GPSButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:text="GPS"
+            android:background="@color/colorPrimaryDark"
+            />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">StoryLine</string>
+    <string name="process">Processing...</string>
+    <string name="defaultError">Something went wrong</string>
+    <string name="code_prep">PREFERENCES</string>
+    <string name="code_id">id</string>
+    <string name="code_name">name</string>
+    <string name="load">Loading...</string>
+    <string name="code_story_id">storyId</string>
+    <string name="code_story_node_count">storyNodeCount</string>
+    <string name="code_story_title">storyTitle</string>
+    <string name="title_activity_maps">Map</string>
+
+
+</resources>

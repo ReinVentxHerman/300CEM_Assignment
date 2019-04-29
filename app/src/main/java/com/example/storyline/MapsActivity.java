@@ -84,7 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Polyline polyline=mMap.addPolyline(o);
 
-
     }
 
     class ListStoryNodeTask extends AsyncTask<String, String, String> {

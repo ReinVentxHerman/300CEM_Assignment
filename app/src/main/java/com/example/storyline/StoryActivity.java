@@ -2,6 +2,11 @@ package com.example.storyline;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorEventListener2;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class StoryActivity extends AppCompatActivity {
+public class StoryActivity extends AppCompatActivity implements SensorEventListener {
 
     String storyId, storyNodeCount, storyTitle;
     RecyclerView recyclerView;
@@ -30,10 +36,49 @@ public class StoryActivity extends AppCompatActivity {
     Button buttonTakePhoto,buttonGoMap;
     TextView textViewStoryTitle;
 
+    SensorManager sensorManager;
+    Sensor sensor;
+
+
+
+    private float mAccel; // acceleration apart from gravity
+    private float mAccelCurrent; // current acceleration including gravity
+    private float mAccelLast; // last acceleration including gravity
+    private static final float MAX_ACCEL=11;
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        System.out.println("sensor");
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        mAccelLast = mAccelCurrent;
+        mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float delta = mAccelCurrent - mAccelLast;
+        mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+
+        if (mAccel > MAX_ACCEL) {
+            Intent i =new Intent(this,MapsActivity.class);
+            i.putExtra(getString(R.string.code_story_id),storyId);
+            i.putExtra(getString(R.string.code_story_title), storyTitle);
+            startActivity(i);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         nodes = new ArrayList<>();
 
         storyId = getIntent().getExtras().getString(getString(R.string.code_story_id));
@@ -78,6 +123,12 @@ public class StoryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         refresh();
+        sensorManager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 
     private void refresh() {
@@ -86,6 +137,7 @@ public class StoryActivity extends AppCompatActivity {
         listStoryNodeTask = new ListStoryNodeTask(storyId);
         listStoryNodeTask.execute();
     }
+
 
     class ListStoryNodeTask extends AsyncTask<String, String, String> {
 

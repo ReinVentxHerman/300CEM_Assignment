@@ -70,9 +70,6 @@ ArrayList<Story> storys;
 
 
 
-
-
-
     }
 
     @Override

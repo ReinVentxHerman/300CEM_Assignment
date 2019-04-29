@@ -14,14 +14,31 @@
         android:layout_weight="1"
         tools:context=".MapsActivity" />
 
-    <CheckBox
-        android:id="@+id/checkBoxPolyLine"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="20"
-        android:checked="true"
-        android:text="Line"
-        android:textColor="@color/colorWhite" />
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBoxPolyLine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Lines"
+            android:textColor="@color/colorWhite" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMarker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Markers"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
 
 </LinearLayout>
 

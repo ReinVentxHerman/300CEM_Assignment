@@ -11,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -29,6 +30,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String storyId, storyTitle;
     Polyline polyline;
     private CheckBox checkBoxPolyLine;
+    private ArrayList<Marker> makers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         isNodesReady = false;
 
         nodes = new ArrayList();
+        makers = new ArrayList<>();
 
         storyId = getIntent().getExtras().getString(getString(R.string.code_story_id));
         storyTitle = getIntent().getExtras().getString(getString(R.string.code_story_title));
@@ -87,15 +90,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         PolylineOptions o = new PolylineOptions();
         o.clickable(false);
 
+
         for (int i = 0; i < nodes.size(); i++) {
             locations.add(new LatLng(Double.parseDouble(nodes.get(i).lat), Double.parseDouble(nodes.get(i).lng)));
-            mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des));
+            makers.add(mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locations.get(i)));
+
             o.add(locations.get(i));
         }
 
         polyline = mMap.addPolyline(o);
-
     }
 
     class ListStoryNodeTask extends AsyncTask<String, String, String> {

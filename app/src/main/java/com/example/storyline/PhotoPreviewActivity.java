@@ -49,7 +49,6 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_preview);
 
-
         Bundle extras = getIntent().getExtras();
 
         takePhoto = findViewById(R.id.takePhotoButton);

@@ -3,6 +3,8 @@ package com.example.storyline;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,11 +24,11 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
-    Boolean isMapReady,isNodesReady;
-
-    ArrayList<StoryNode> nodes ;
-    String storyId,storyTitle;
+    Boolean isMapReady, isNodesReady;
+    ArrayList<StoryNode> nodes;
+    String storyId, storyTitle;
+    Polyline polyline;
+    private CheckBox checkBoxPolyLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        isMapReady=false;
-        isNodesReady=false;
+        checkBoxPolyLine = findViewById(R.id.checkBoxPolyLine);
+        checkBoxPolyLine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (polyline != null) {
+                    polyline.setVisible(b);
+                }
+            }
+        });
 
-        nodes=new ArrayList();
+        isMapReady = false;
+        isNodesReady = false;
 
-        storyId=getIntent().getExtras().getString(getString(R.string.code_story_id));
-        storyTitle=getIntent().getExtras().getString(getString(R.string.code_story_title));
+        nodes = new ArrayList();
+
+        storyId = getIntent().getExtras().getString(getString(R.string.code_story_id));
+        storyTitle = getIntent().getExtras().getString(getString(R.string.code_story_title));
 
         new ListStoryNodeTask(storyId).execute();
 
@@ -60,29 +72,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        isMapReady=true;
+        isMapReady = true;
         System.out.println("onMapReady");
         mMap = googleMap;
-        if (isMapReady&&isNodesReady){
+        if (isMapReady && isNodesReady) {
             drawMap();
         }
 
     }
 
-    public void drawMap(){
-        ArrayList<LatLng> locations=new ArrayList<>();
+    public void drawMap() {
+        ArrayList<LatLng> locations = new ArrayList<>();
 
         PolylineOptions o = new PolylineOptions();
         o.clickable(false);
 
-        for (int i =0;i<nodes.size();i++){
-            locations.add(new LatLng(Double.parseDouble(nodes.get(i).lat),Double.parseDouble(nodes.get(i).lng)));
+        for (int i = 0; i < nodes.size(); i++) {
+            locations.add(new LatLng(Double.parseDouble(nodes.get(i).lat), Double.parseDouble(nodes.get(i).lng)));
             mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locations.get(i)));
             o.add(locations.get(i));
         }
 
-        Polyline polyline=mMap.addPolyline(o);
+        polyline = mMap.addPolyline(o);
 
     }
 
@@ -122,13 +134,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             node = new StoryNode(id, des, lat, lng, image, time, storyId);
                             nodes.add(node);
                         }
-                        isNodesReady=true;
+                        isNodesReady = true;
                         System.out.println("onPostExecute");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (isNodesReady&&isMapReady){
+                    if (isNodesReady && isMapReady) {
                         drawMap();
                     }
                 }

@@ -29,8 +29,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<StoryNode> nodes;
     String storyId, storyTitle;
     Polyline polyline;
-    private CheckBox checkBoxPolyLine;
-    private ArrayList<Marker> makers;
+    private CheckBox checkBoxPolyLine, checkBoxMarker;
+    private ArrayList<Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         checkBoxPolyLine = findViewById(R.id.checkBoxPolyLine);
+        checkBoxMarker = findViewById(R.id.checkBoxMarker);
         checkBoxPolyLine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -51,11 +52,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        checkBoxMarker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (markers != null) {
+                    for (Marker marker : markers) {
+                        marker.setVisible(b);
+                    }
+                }
+            }
+        });
+
         isMapReady = false;
         isNodesReady = false;
 
         nodes = new ArrayList();
-        makers = new ArrayList<>();
+        markers = new ArrayList<>();
 
         storyId = getIntent().getExtras().getString(getString(R.string.code_story_id));
         storyTitle = getIntent().getExtras().getString(getString(R.string.code_story_title));
@@ -93,7 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0; i < nodes.size(); i++) {
             locations.add(new LatLng(Double.parseDouble(nodes.get(i).lat), Double.parseDouble(nodes.get(i).lng)));
-            makers.add(mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des)));
+            markers.add(mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locations.get(i)));
 
             o.add(locations.get(i));

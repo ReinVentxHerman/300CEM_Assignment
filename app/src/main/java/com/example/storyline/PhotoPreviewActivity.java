@@ -61,13 +61,7 @@ public class PhotoPreviewActivity extends AppCompatActivity {
 
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo_gary_24dp));
 
-        buttonPermission.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestPermission();
-            }
-        });
-
+        requestPermission();
 
         buttonGPS.setOnClickListener(new View.OnClickListener() {
             @Override

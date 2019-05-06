@@ -59,22 +59,7 @@
                 android:text="Take a photo"
                 android:background="@color/colorPrimaryDark"
                 />
-            <Button
-                android:id="@+id/permissionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:text="permission"
-                android:background="@color/colorPrimary"
-                />
-            <Button
-            android:id="@+id/GPSButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="GPS"
-            android:background="@color/colorPrimaryDark"
-            />
+
         </LinearLayout>
 
     </LinearLayout>

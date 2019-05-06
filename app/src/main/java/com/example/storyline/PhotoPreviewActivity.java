@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 
 public class PhotoPreviewActivity extends AppCompatActivity {
 
-    Button takePhoto, sentPost,buttonPermission,buttonGPS;
+    Button takePhoto, sentPost;
     TextView error;
     ImageView imageView;
     EditText editText;//description
@@ -56,43 +56,10 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         imageView = findViewById(R.id.toUploadImage);
         editText = findViewById(R.id.toUploadDescription);
         error = findViewById(R.id.uploadErrorMessage);
-        buttonPermission=findViewById(R.id.permissionButton);
-        buttonGPS=findViewById(R.id.GPSButton);
 
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo_gary_24dp));
 
         requestPermission();
-
-        buttonGPS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                }else {
-                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    locationListener = new LocationListener() {
-                        public void onLocationChanged(Location l) {
-                            // Called when a new location is found by the network location provider.
-                            location = l;
-                        }
-
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-                        }
-
-                        public void onProviderEnabled(String provider) {
-                        }
-
-                        public void onProviderDisabled(String provider) {
-                        }
-                    };
-
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                }
-
-            }
-        });
 
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,12 +95,6 @@ public class PhotoPreviewActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        locationManager.removeUpdates(locationListener);
-    }
-
     private void takePhoto(){
 
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -142,6 +103,7 @@ public class PhotoPreviewActivity extends AppCompatActivity {
             }
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -166,7 +128,35 @@ public class PhotoPreviewActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+        }else {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationListener = new LocationListener() {
+                public void onLocationChanged(Location l) {
+                    // Called when a new location is found by the network location provider.
+                    location = l;
+                }
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                public void onProviderEnabled(String provider) {
+                }
+
+                public void onProviderDisabled(String provider) {
+                }
+            };
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
     }
 
     private static Bitmap resize(Bitmap b){

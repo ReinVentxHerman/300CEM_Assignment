@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/storyTitleTop"
-        android:text="@string/load"
+        android:text="@string/loading"
         android:background="@color/colorPrimaryLight"
         android:textSize="30dp"
         android:textStyle="bold|italic"

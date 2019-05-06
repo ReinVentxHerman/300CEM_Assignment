@@ -103,15 +103,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         o.clickable(false);
 
 
-        for (int i = 0; i < nodes.size(); i++) {
+        if (!nodes.isEmpty()){
+            for (int i = 0; i < nodes.size(); i++) {
             locations.add(new LatLng(Double.parseDouble(nodes.get(i).lat), Double.parseDouble(nodes.get(i).lng)));
             markers.add(mMap.addMarker(new MarkerOptions().position(locations.get(i)).title(nodes.get(i).des)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(locations.get(i)));
-
             o.add(locations.get(i));
         }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locations.get(locations.size()-1), 16.0f));
+            polyline = mMap.addPolyline(o);
+        }
 
-        polyline = mMap.addPolyline(o);
     }
 
     class ListStoryNodeTask extends AsyncTask<String, String, String> {

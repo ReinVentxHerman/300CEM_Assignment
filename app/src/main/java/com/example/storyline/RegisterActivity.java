@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         break;
                      default:
-                         setErrorMessage(getString(R.string.defaultError));
+                         setErrorMessage(getString(R.string.server_error));
                 }
             }
         }

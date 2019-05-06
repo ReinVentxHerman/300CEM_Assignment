@@ -3,6 +3,8 @@ package com.example.storyline;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,15 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         errorMessage.setText("");
 
-        username.setText("Herman");
-        password.setText("123");
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 errorMessage.setText("");
                 loginTask = new LoginTask(username.getText().toString(), password.getText().toString());
+                errorMessage.setText(getString(R.string.loading_network));
                 loginTask.execute();
+
             }
         });
 
@@ -95,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        errorMessage.setText(getString(R.string.defaultError));
+                        errorMessage.setText(getString(R.string.server_error));
                         return;
                     }
+
+                    errorMessage.setText("");
 
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString(getString(R.string.code_id),id);
@@ -108,7 +111,16 @@ public class MainActivity extends AppCompatActivity {
                     errorMessage.setText(LOGIN_FAIL);
                 }
             }else {
-                errorMessage.setText(getString(R.string.defaultError));
+
+                ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                    //we are connected to a network
+                    errorMessage.setText(getString(R.string.server_error));
+                }else {
+                    errorMessage.setText(getString(R.string.network_error));
+                }
+
             }
 
         }

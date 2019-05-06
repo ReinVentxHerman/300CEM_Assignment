@@ -44,11 +44,10 @@ public class StoryActivity extends AppCompatActivity implements SensorEventListe
     private float mAccel; // acceleration apart from gravity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
-    private static final float MAX_ACCEL=11;
+    private static final float MAX_ACCEL=10;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        System.out.println("sensor");
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];

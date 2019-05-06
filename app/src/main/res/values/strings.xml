@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">StoryLine</string>
     <string name="process">Processing...</string>
-    <string name="defaultError">Something went wrong</string>
+    <string name="network_error">Not connected to network</string>
+    <string name="server_error">Server not responding</string>
     <string name="code_prep">PREFERENCES</string>
     <string name="code_id">id</string>
     <string name="code_name">name</string>
-    <string name="load">Loading...</string>
+    <string name="loading">Loading...</string>
+    <string name="loading_network">Connecting to server...\nplease wait</string>
     <string name="code_story_id">storyId</string>
     <string name="code_story_node_count">storyNodeCount</string>
     <string name="code_story_title">storyTitle</string>

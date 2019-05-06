@@ -193,7 +193,7 @@ public class PhotoPreviewActivity extends AppCompatActivity {
                     return;
                 }
             }
-            Toast.makeText(PhotoPreviewActivity.this,PhotoPreviewActivity.this.getString(R.string.defaultError),Toast.LENGTH_SHORT);
+            Toast.makeText(PhotoPreviewActivity.this,PhotoPreviewActivity.this.getString(R.string.server_error),Toast.LENGTH_SHORT);
         }
     }
 
